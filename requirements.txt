@@ -1,0 +1,12 @@
+# Generic pinned dependencies.
+# This file intentionally does not bind PyTorch to a CUDA wheel index.
+# For GPU training, install the matching CUDA PyTorch wheel from https://pytorch.org/get-started/locally/.
+torch==2.5.1
+opencv-python==4.13.0.92
+numpy==2.4.4
+pandas==3.0.3
+Pillow==12.2.0
+PyYAML==6.0.3
+tqdm==4.67.3
+onnx==1.21.0
+onnxruntime==1.24.4

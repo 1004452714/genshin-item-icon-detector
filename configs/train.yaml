@@ -1,0 +1,96 @@
+project_root: "."
+
+data:
+  labels_csv: "data/generated/labels.csv"
+  image_size: [125, 125]
+  num_workers: 8
+  pin_memory: true
+  persistent_workers: true
+  prefetch_factor: 4
+  cache_images: true
+
+model:
+  embedding_dim: 256
+  base_channels: 80
+  dropout: 0.02
+  quality_head: true
+  metric_head:
+    enabled: true
+    type: "cosface"
+    scale: 48.0
+    margin: 0.35
+
+compose:
+  icon_scale: 1.0
+  icon_offset: [0, 0]
+  delicious_overlay: "assets/overlays/UI_CookIcon_Delicious.png"
+  weird_food_saturation_factor: 0.8
+
+train:
+  seed: 42
+  epochs: 160
+  batch_size: 128
+  views_per_sample: 3
+  learning_rate: 0.0005
+  weight_decay: 0.0001
+  quality_loss_weight: 0.15
+  quality_loss_categories: ["relic"]
+  contrastive_loss_weight: 0.15
+  contrastive_temperature: 0.07
+  hard_negative_loss_weight: 0.35
+  hard_negative_margin: 0.12
+  logit_gap_loss_weight: 0.15
+  logit_gap_margin: 0.10
+  mixed_precision: true
+  save_dir: "outputs/checkpoints"
+
+augment:
+  scale_range: [0.90, 1.10]
+  translate_px: 10
+  hue_shift: 0.03
+  saturation: 0.12
+  brightness: 0.12
+  contrast: 0.12
+  gamma: [0.92, 1.08]
+  background_drift:
+    hue_shift: 0.05
+    saturation: 0.20
+    brightness: 0.18
+    contrast: 0.14
+    gamma: [0.88, 1.12]
+  noise_std: 3.0
+  blur_probability: 0.15
+  sharpen_probability: 0.15
+  jpeg_probability: 0.15
+  random_background:
+    enabled: true
+    probability: 0.70
+    exclude_categories: ["relic"]
+    solid_weight: 0.40
+    gradient_weight: 0.35
+    noise_weight: 0.25
+    saturation: [0.05, 0.75]
+    value: [0.45, 0.95]
+  occlusion:
+    enabled: true
+    probability: 0.50
+    regions:
+      - [90, 0, 125, 34]
+      - [12, 106, 117, 125]
+    size_ratio: [0.35, 1.0]
+    alpha_range: [0.35, 0.85]
+
+prototype:
+  samples_per_label: 24
+  output_csv: "outputs/prototypes.csv"
+
+infer:
+  invalid_relic_quality_penalty: 0.0
+
+export:
+  onnx_path: "outputs/item.onnx"
+  opset: 17
+
+normalization:
+  mean: [0.5, 0.5, 0.5]
+  std: [0.5, 0.5, 0.5]

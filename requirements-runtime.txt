@@ -1,0 +1,8 @@
+# Inference/test-only dependencies.
+# Use this when outputs/item.onnx and outputs/prototypes.csv already exist.
+opencv-python==4.13.0.92
+numpy==2.4.4
+pandas==3.0.3
+Pillow==12.2.0
+PyYAML==6.0.3
+onnxruntime==1.24.4

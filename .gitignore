@@ -1,0 +1,25 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+outputs/
+temp/
+test/
+data/real_val/
+data/generated/*.csv
+
+*.log
+*.pt
+*.pth
+*.onnx
+
+# 本地训练素材，不随代码仓库提交。
+assets/**/*.png
+assets/raw/**/*.png
+assets/processed/**
+
+!assets/processed/**/
+!assets/processed/**/.gitkeep
+!assets/**/.gitkeep
