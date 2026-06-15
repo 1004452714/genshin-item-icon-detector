@@ -1,6 +1,11 @@
 # ItemDetect
 
+> [!IMPORTANT]
+> 本项目的代码、配置、文档和项目结构完全由 AI 生成。
+
 用于训练和测试原神物品图标识别模型，覆盖材料、食物、圣遗物和武器。模型导出为 `ONNX + prototypes.csv`，推理时按 `item_class_id` 聚合 TopK。
+
+![ItemDetect 实机窗口测试效果](pic.png)
 
 ## 数据目录
 
@@ -46,7 +51,7 @@ python -m pip install -r requirements.txt
 python -m pip install --force-reinstall torch==2.5.1 --index-url https://download.pytorch.org/whl/cu121
 ```
 
-如果已经有 `outputs/item.onnx` 和 `outputs/prototypes.csv`，只是运行单图测试、目录测试或实机测试，可以安装轻量测试环境：
+如果已经从其他途径获得本项目训练好的模型，可以不安装完整训练环境。把 `item.onnx` 和 `prototypes.csv` 放到默认路径 `outputs/item.onnx` 和 `outputs/prototypes.csv` 后，只安装轻量测试环境即可运行单图测试、目录测试或实机窗口测试：
 
 ```powershell
 python -m pip install -r requirements-runtime.txt
@@ -54,19 +59,37 @@ python -m pip install -r requirements-runtime.txt
 
 轻量测试环境不包含 `torch` 和 `onnx`，不能执行 `prepare`、`train`、`preview`、`prototypes` 或 `export`。
 
+## 已有模型快速测试
+
+如果已经有兼容本项目的训练结果，只需要准备：
+
+- `outputs/item.onnx`
+- `outputs/prototypes.csv`
+- `requirements-runtime.txt` 轻量测试环境
+
+模型必须与当前 `configs/train.yaml`、labels/prototypes 生成规则兼容，否则推理类别、向量维度或归一化参数可能不匹配。
+
+```powershell
+python -m pip install -r requirements-runtime.txt
+.\itemdetect.ps1 live
+.\itemdetect.ps1 infer --image test\a.png
+.\itemdetect.ps1 test --image-dir test
+```
+
 ## 首次使用流程
 
 本仓库不包含训练 PNG。使用前需要自行获取图标素材，并按目录放好：
 
-1. 把材料和食物 PNG 放入 `assets/icons/items/`（`UI_ItemIcon_.*?`）。
-2. 把圣遗物 PNG 放入 `assets/icons/relics/`（`UI_RelicIcon_.*?`）。
-3. 把背景 PNG 放入 `assets/backgrounds/`（`UI_QUALITY_.*?`）。
-4. 把美味食物叠层 `UI_CookIcon_Delicious.png` 放入 `assets/overlays/`。
-5. 武器图标先把原始导出 PNG 放入 `assets/raw/weapons/`（`UI_EquipIcon_.*?`）。
-6. 在菜单选择 `8. 处理武器图标`，或运行 `.\itemdetect.ps1 process-weapons`，脚本会把结果分到 `assets/processed/weapons/icon|side|review|invalid/`。
-7. 人工复查 `review/`，把确认可训练的图标重命名为 `_ICON.png` 后缀；终端输入 `APPLY` 后才会复制到 `assets/icons/weapons/`，复制时自动去掉 `_ICON` 后缀。
-8. 素材准备完成后，菜单选择 `1. 准备数据` 校验标签和图片。
-9. 校验通过后，菜单选择 `2. 开始完整训练`。
+1. 从 [Snap.Metadata](https://github.com/SnapHutaoRemasteringProject/Snap.Metadata) 获取 JSON 元数据：`Material.json`、`Reliquary.json`、`Weapon.json`，放到 `data/metadata/`。
+2. 把材料和食物 PNG 放入 `assets/icons/items/`（`UI_ItemIcon_.*?`）。
+3. 把圣遗物 PNG 放入 `assets/icons/relics/`（`UI_RelicIcon_.*?`）。
+4. 把背景 PNG 放入 `assets/backgrounds/`（`UI_QUALITY_.*?`）。
+5. 把美味食物叠层 `UI_CookIcon_Delicious.png` 放入 `assets/overlays/`。
+6. 武器图标先把原始导出 PNG 放入 `assets/raw/weapons/`（`UI_EquipIcon_.*?`）。
+7. 在菜单选择 `8. 处理武器图标`，或运行 `.\itemdetect.ps1 process-weapons`，脚本会把结果分到 `assets/processed/weapons/icon|side|review|invalid/`。
+8. 人工复查 `review/`，把确认可训练的图标重命名为 `_ICON.png` 后缀；终端输入 `APPLY` 后才会复制到 `assets/icons/weapons/`，复制时自动去掉 `_ICON` 后缀。
+9. 素材准备完成后，菜单选择 `1. 准备数据` 校验标签和图片。
+10. 校验通过后，菜单选择 `2. 开始完整训练`。
 
 ## 常用命令
 
@@ -105,6 +128,10 @@ python -m pip install -r requirements-runtime.txt
 ```powershell
 .\itemdetect.ps1 live
 ```
+
+`.\itemdetect.ps1 live` 会查找游戏窗口并打开实时识别与参数控制窗口，适合快速验证模型效果。
+
+实机测试主要面向 Windows + PowerShell + 原神窗口。游戏窗口需要可见且未最小化；默认使用 CPU 推理，如需 CUDA 推理可追加 `--provider cuda`。控制窗口可以调整 HSV、面积和裁剪参数。
 
 处理武器图标：
 
