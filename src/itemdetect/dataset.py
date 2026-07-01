@@ -45,7 +45,7 @@ REQUIRED_COLUMNS = {
 ALLOWED_CATEGORIES = {"material", "food", "relic", "weapon"}
 ALLOWED_FOOD_QUALITIES = {"", "normal", "weird", "delicious"}
 ALLOWED_WEAPON_STATES = {"", "normal", "awaken"}
-SPECIAL_DELICIOUS_OVERLAY_FOODS = {"鎏金殿堂", "一捧绿野", "雾凇秋分", "白浪拂沙"}
+SPECIAL_DELICIOUS_OVERLAY_FOODS = {"鎏金殿堂", "一捧绿野", "雾凇秋分", "白浪拂沙","茶会序曲・拉花咖啡","茶会序曲・花草香茶"}
 
 
 def load_labels(path: str | Path) -> pd.DataFrame:

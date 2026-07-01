@@ -15,6 +15,7 @@ FIELDNAMES = [
     "item_id",
     "item_name",
     "category",
+    "material_type",
     "quality_level",
     "image_path",
     "background_path",
@@ -29,6 +30,17 @@ FIELDNAMES = [
 MATERIAL_ITEM1_TYPES = {0, 8}
 MATERIAL_ITEM2_TYPES = {0, 1, 4, 5, 6, 10, 11, 13, 14, 15, 21, 24, 25, 31, 32, 33}
 FOOD_MATERIAL_TYPES = {1, 15}
+INCLUDED_MATERIAL_TYPE_DESCRIPTIONS = {
+    "武器突破素材",
+    "角色与武器培养素材",
+    "角色天赋素材",
+    "药剂",
+    "角色突破素材",
+    "消耗品",
+    "鱼饵",
+    "食物",
+    "制作配方",
+}
 SKIPPED_FOOD_ITEM_IDS = {"121374"}
 SKIPPED_FOOD_ITEM_ID_REASON = "食物 item_id 黑名单"
 
@@ -251,6 +263,7 @@ def build_row(
     food_base_name: str = "",
     weapon_state: str = "",
     allowed_quality_levels: str = "",
+    material_type: str = "",
 ) -> dict[str, str]:
     return {
         "variant_id": variant_id,
@@ -258,6 +271,7 @@ def build_row(
         "item_id": item_id,
         "item_name": item_name,
         "category": category,
+        "material_type": material_type,
         "quality_level": quality_level,
         "image_path": relative_for_csv(image_path, root),
         "background_path": relative_for_csv(background_path, root),
@@ -290,6 +304,8 @@ def rows_from_materials(
         item_name = as_text(item.get("Name"))
         icon_name = as_text(item.get("Icon"))
         quality_level = as_text(item.get("RankLevel"))
+        type_description = as_text(item.get("TypeDescription"))
+        material_type = type_description if type_description in INCLUDED_MATERIAL_TYPE_DESCRIPTIONS else ""
         if icon_name:
             expected_icons.add(icon_name)
         if not item_id or not item_name or not icon_name or quality_level == "":
@@ -356,6 +372,7 @@ def rows_from_materials(
                 item_id=item_id,
                 item_name=item_name,
                 category=category,
+                material_type=material_type,
                 quality_level=quality_level,
                 image_path=image_path,
                 background_path=background_path,

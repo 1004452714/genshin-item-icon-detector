@@ -45,6 +45,7 @@ def build_prototypes(config_path: str | Path, checkpoint_path: str | Path, out_p
                 "variant_id": row["variant_id"],
                 "item_class_id": row["item_class_id"],
                 "item_name": row["item_name"],
+                "material_type": row.get("material_type", ""),
                 "food_base_name": row["food_base_name"],
                 "quality_level": quality_level,
                 "weapon_state": row["weapon_state"],

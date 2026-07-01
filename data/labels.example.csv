@@ -1,6 +1,6 @@
-variant_id,item_class_id,item_id,item_name,category,quality_level,image_path,background_path,food_quality,food_base_name,weapon_state,allowed_quality_levels,source_json,split
-material:101,material:101,101,example_material,material,3,assets/icons/items/UI_ItemIcon_101.png,assets/backgrounds/UI_QUALITY_BLUE.png,,,,3,Material.json,train
-material:100061:quality:0,material:100061,merged:100061:0,example_merged_material,material,0,assets/icons/items/UI_ItemIcon_100061.png,assets/backgrounds/UI_QUALITY_WHITE.png,,,,0,Material.json,train
-food:100428:weird,food:100428:weird,108080,weird_example_food,food,2,assets/icons/items/UI_ItemIcon_100428.png,assets/backgrounds/UI_QUALITY_GREEN.png,weird,example_food,,2,Material.json,train
-weapon:11101:normal,weapon:11101,11101,example_weapon,weapon,1,assets/icons/weapons/UI_EquipIcon_Sword_Blunt.png,assets/backgrounds/UI_QUALITY_WHITE.png,,,normal,1,Weapon.json,train
-relic:10001_1:1:0,relic:10001_1,relic_0,example_relic,relic,1,assets/icons/relics/UI_RelicIcon_10001_1.png,assets/backgrounds/UI_QUALITY_WHITE.png,,,,1|2|3|4|5,Reliquary.json,train
+variant_id,item_class_id,item_id,item_name,category,material_type,quality_level,image_path,background_path,food_quality,food_base_name,weapon_state,allowed_quality_levels,source_json,split
+material:101,material:101,101,example_material,material,消耗品,3,assets/icons/items/UI_ItemIcon_101.png,assets/backgrounds/UI_QUALITY_BLUE.png,,,,3,Material.json,train
+material:100061:quality:0,material:100061,merged:100061:0,example_merged_material,material,消耗品,0,assets/icons/items/UI_ItemIcon_100061.png,assets/backgrounds/UI_QUALITY_WHITE.png,,,,0,Material.json,train
+food:100428:weird,food:100428:weird,108080,weird_example_food,food,食物,2,assets/icons/items/UI_ItemIcon_100428.png,assets/backgrounds/UI_QUALITY_GREEN.png,weird,example_food,,2,Material.json,train
+weapon:11101:normal,weapon:11101,11101,example_weapon,weapon,,1,assets/icons/weapons/UI_EquipIcon_Sword_Blunt.png,assets/backgrounds/UI_QUALITY_WHITE.png,,,normal,1,Weapon.json,train
+relic:10001_1:1:0,relic:10001_1,relic_0,example_relic,relic,,1,assets/icons/relics/UI_RelicIcon_10001_1.png,assets/backgrounds/UI_QUALITY_WHITE.png,,,,1|2|3|4|5,Reliquary.json,train
